@@ -1,10 +1,8 @@
 __author__ = "Juan Esteban Londoño Tabares"
 
-import pafy
 import sys
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
-from PySide import QtWebKit
 
 __youtube__ = "https://www.youtube.com"
 
@@ -26,9 +24,25 @@ class FrmDescargas(QtGui.QWidget):
         super(FrmDescargas, self).__init__(parent)
         self.vDescargas = Ui_Descargas()
         self.vDescargas.setupUi(self)
+        self.modificar_grid()  # Cargamos grid con las propiedades basicas
         self.vDescargas.tableWidget.setRowCount(5)
-        self.vDescargas.tableWidget.setColumnCount(5)
+        self.vDescargas.tableWidget.setRowHeight(0, 19)
         self.vDescargas.tableWidget.setItem(1, 0, QtGui.QTableWidgetItem("hola"))
+        self.barra_progreso = QtGui.QProgressBar(self)
+        self.barra_progreso.setProperty("value", 24)
+        self.barra_progreso.setObjectName("barra_progreso")
+        self.vDescargas.tableWidget.setCellWidget(0, 1, self.barra_progreso)
+
+    def modificar_grid(self):
+        self.vDescargas.tableWidget.setColumnCount(5)
+        self.vDescargas.tableWidget.setHorizontalHeaderItem(0, QtGui.QTableWidgetItem("Canción"))
+        self.vDescargas.tableWidget.setHorizontalHeaderItem(1, QtGui.QTableWidgetItem("Progreso"))
+        self.vDescargas.tableWidget.setHorizontalHeaderItem(2, QtGui.QTableWidgetItem("Tamaño"))
+        self.vDescargas.tableWidget.setHorizontalHeaderItem(3, QtGui.QTableWidgetItem("Estado"))
+        self.vDescargas.tableWidget.setHorizontalHeaderItem(4, QtGui.QTableWidgetItem("Ubicación"))
+        self.vDescargas.tableWidget.setColumnWidth(0, 67)
+        self.vDescargas.tableWidget.setColumnWidth(1, 250)
+        self.vDescargas.tableWidget.setColumnWidth(4, 135)
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)

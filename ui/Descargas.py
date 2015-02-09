@@ -2,12 +2,13 @@
 
 # Form implementation generated from reading ui file 'Descargas.ui'
 #
-# Created: Sun Feb  8 17:30:24 2015
+# Created: Mon Feb  9 14:36:28 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PySide import QtCore, QtGui
+
 
 class Ui_Descargas(object):
     def setupUi(self, Dialog):
@@ -53,4 +54,12 @@ class Ui_Descargas(object):
         self.lblUrlVideo.setText(QtGui.QApplication.translate("Dialog", "Ingresa la URL del video", None, QtGui.QApplication.UnicodeUTF8))
 
 
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    Dialog = QtGui.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
 
