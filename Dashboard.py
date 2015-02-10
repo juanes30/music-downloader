@@ -33,6 +33,19 @@ class FrmDescargas(QtGui.QWidget):
         self.barra_progreso.setObjectName("barra_progreso")
         self.vDescargas.tableWidget.setCellWidget(0, 1, self.barra_progreso)
 
+        dat = self.vDescargas.tableWidget.rowCount()
+        print(dat)
+
+    def setmydata(self):
+        n = 0
+        for key in self.data:
+            m = 0
+            for item in self.data[key]:
+                newitem = QtGui.QTableWidgetItem(item)
+                self.vDescargas.tableWidget.setItem(m, n, newitem)
+                m += 1
+            n += 1
+
     def modificar_grid(self):
         self.vDescargas.tableWidget.setColumnCount(5)
         self.vDescargas.tableWidget.setHorizontalHeaderItem(0, QtGui.QTableWidgetItem("Canción"))
