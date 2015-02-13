@@ -2,6 +2,7 @@ __author__ = "Juan Esteban Londoño Tabares"
 
 import sys
 import pafy
+import  urllib.request
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
 
@@ -29,7 +30,6 @@ class FrmDescargas(QtGui.QWidget):
         self.setWindowTitle("Descargas")
         self.update_grid()  # Cargamos grid con las propiedades basicas
         self.vDescargas.btnAgregarVideo.clicked.connect(self.add_video)
-        self.status_txt = QtGui.QLabel()
 
     def update_grid(self):
         self.vDescargas.tableWidget.setColumnCount(5)
@@ -53,21 +53,25 @@ class FrmDescargas(QtGui.QWidget):
             size_file = stream_video.get_filesize()
             size_file_mb = round(((size_file/1024)/1024), 2)
 
-            barra_progreso = QtGui.QProgressBar(self)
-            barra_progreso.setProperty("value", 0)
-            barra_progreso.setObjectName("barra_progreso")
+            self.barra_progreso = QtGui.QProgressBar(self)
+            self.setProperty("value", 0)
+            self.setObjectName("barra_progreso")
 
             # Agregando una nueva fila al QTableWidget
             count_row = self.vDescargas.tableWidget.rowCount()
             self.vDescargas.tableWidget.insertRow(count_row)
             self.vDescargas.tableWidget.setItem(count_row, 0, QtGui.QTableWidgetItem(titulo_cancion))
-            self.vDescargas.tableWidget.setCellWidget(count_row, 1, barra_progreso)
+            self.vDescargas.tableWidget.setCellWidget(count_row, 1, self.barra_progreso)
             self.vDescargas.tableWidget.setItem(count_row, 2, QtGui.QTableWidgetItem(str(size_file_mb) + " MB"))
+            self.vDescargas.tableWidget.setItem(count_row, 3, QtGui.QTableWidgetItem("Pendiente"))
             self.vDescargas.tableWidget.setRowHeight(count_row, 19)
 
             # Limpiar Url Video
             self.vDescargas.txtUrlVideo.setText("")
             self.vDescargas.txtUrlVideo.setFocus()
+
+            self.download_video(stream_video.url, "C:/Users/JuanEsteban/Desktop/video." + stream_video.extension)
+            QtCore.QCoreApplication.processEvents()
         else:
             self.mostrar_mensaje('Mensaje Informativo', 'El video no existe, por favor verifique')
 
@@ -75,6 +79,20 @@ class FrmDescargas(QtGui.QWidget):
         mensaje_box = QtGui.QMessageBox(QtGui.QMessageBox.Information, titulo, mensaje, QtGui.QMessageBox.NoButton
                                         , self)
         mensaje_box.exec_()
+
+    def download_video(self, url_video, path_file):
+        # Ejecuta el metodo progress_report para ir mostrando el avance de la descarga
+        urllib.request.urlretrieve(url_video, path_file, reporthook=self.progress_report)
+        QtCore.QCoreApplication.processEvents()
+
+    def progress_report(self, block_read, size_block, file_size):
+        # total_size_mb = round(((file_size / 1024) / 1024), 2)
+        total_download = block_read * size_block
+        # total_download_mb = round(((total_download / 1024) / 1024), 2)
+        self.barra_progreso.setMinimum(0)
+        self.barra_progreso.setMaximum(file_size)
+        self.barra_progreso.setValue(total_download)
+        QtCore.QCoreApplication.processEvents()
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
