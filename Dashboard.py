@@ -2,8 +2,10 @@ __author__ = "Juan Esteban Londoño Tabares"
 
 import sys
 import pafy
-import urllib.request
 import os
+import urllib.request
+import time
+from threading import Thread
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
 
@@ -31,6 +33,9 @@ class FrmDescargas(QtGui.QWidget):
         self.setWindowTitle("Descargas")
         self.update_grid()  # Cargamos grid con las propiedades basicas
         self.vDescargas.btnAgregarVideo.clicked.connect(self.add_video)
+        self.vDescargas.btnIniciarDescarga.clicked.connect(self.download_video)
+        self.list_videos = []
+        self.list_rutas = []
 
     def update_grid(self):
         self.vDescargas.tableWidget.setColumnCount(5)
@@ -46,7 +51,6 @@ class FrmDescargas(QtGui.QWidget):
     def add_video(self):
         if len(self.vDescargas.txtUrlVideo.text()) != 0:
             global path_file
-
             url_video = self.vDescargas.txtUrlVideo.text()
 
             # Obtener Propiedades del video
@@ -59,13 +63,9 @@ class FrmDescargas(QtGui.QWidget):
 
             # Agregando una nueva fila al QTableWidget
             count_row = self.vDescargas.tableWidget.rowCount()
-            self.barra_progreso = QtGui.QProgressBar(self)
-            self.setProperty("value", 0)
-
             self.vDescargas.tableWidget.insertRow(count_row)
             self.vDescargas.tableWidget.setItem(count_row, 0, QtGui.QTableWidgetItem(titulo_cancion))
             self.vDescargas.tableWidget.setItem(count_row, 2, QtGui.QTableWidgetItem(str(size_file_mb) + " MB"))
-            self.vDescargas.tableWidget.setCellWidget(count_row, 1, self.barra_progreso)
             self.vDescargas.tableWidget.setItem(count_row, 3, QtGui.QTableWidgetItem("Pendiente"))
             self.vDescargas.tableWidget.setRowHeight(count_row, 19)
 
@@ -82,8 +82,13 @@ class FrmDescargas(QtGui.QWidget):
                 path_file = os.path.join(os.environ["USERPROFILE"]
                                          , 'Desktop', titulo_cancion) + '.' + file_extension
 
-            self.download_video(stream_video.url, path_file)
-            QtCore.QCoreApplication.processEvents()
+            self.list_videos.append(stream_video.url)
+            self.list_rutas.append(path_file)
+            print(self.list_videos)
+            print(self.list_rutas)
+
+            '''self.download_video(path_file)
+            QtCore.QCoreApplication.processEvents()'''
 
         else:
             self.mostrar_mensaje('Mensaje Informativo', 'El video no existe, por favor verifique')
@@ -93,10 +98,30 @@ class FrmDescargas(QtGui.QWidget):
                                         , self)
         mensaje_box.exec_()
 
-    def download_video(self, url_video, file):
+    def download_video(self):
         # Ejecuta el metodo progress_report para ir mostrando el avance de la descarga
-        urllib.request.urlretrieve(url_video, file, reporthook=self.progress_report)
-        QtCore.QCoreApplication.processEvents()
+        start = time.time()
+        threads = []
+        print('rutas', self.list_rutas)
+        print('url', self.list_videos)
+        count = 0
+        for url in self.list_videos:
+            ruta = self.list_rutas[count]
+            try:
+                # urllib.request.urlretrieve(url, file, reporthook=self.progress_report)
+                # QtCore.QCoreApplication.processEvents()
+                print('url ', url, 'ruta ', ruta)
+                t = DownloadThread(url, ruta)
+                threads.append(t)
+                t.start()
+                print(url, ruta)
+                for t in threads:
+                    t.join()
+                    print("Elapsed time: %s" % (time.time()-start))
+            except ValueError:
+                print('error')
+                continue
+            count += 1
 
     def progress_report(self, block_read, size_block, file_size):
         # total_size_mb = round(((file_size / 1024) / 1024), 2)
@@ -107,6 +132,26 @@ class FrmDescargas(QtGui.QWidget):
         self.barra_progreso.setValue(total_download)
         QtCore.QCoreApplication.processEvents()
 
+
+class DownloadThread(Thread):
+    def __init__(self, url, file):
+        self.url = url
+        self.file = file
+        super(DownloadThread, self).__init__()
+
+    def run(self):
+        urllib.request.urlretrieve(self.url, self.file, reporthook=self.progress_report)
+        print(self.url)
+
+    def progress_report(self, block_read, size_block, file_size):
+        total_size_mb = round(((file_size / 1024) / 1024), 2)
+        total_download = block_read * size_block
+        total_download_mb = round(((total_download / 1024) / 1024), 2)
+        print(total_download_mb)
+        '''self.barra_progreso.setMinimum(0)
+        self.barra_progreso.setMaximum(file_size)
+        self.barra_progreso.setValue(total_download)'''
+        '''QtCore.QCoreApplication.processEvents()'''
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
