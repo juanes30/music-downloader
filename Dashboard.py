@@ -63,8 +63,11 @@ class FrmDescargas(QtGui.QWidget):
 
             # Agregando una nueva fila al QTableWidget
             count_row = self.vDescargas.tableWidget.rowCount()
+            self.barra_progreso = QtGui.QProgressBar(self)
+            self.barra_progreso.setProperty("value", 0)
             self.vDescargas.tableWidget.insertRow(count_row)
             self.vDescargas.tableWidget.setItem(count_row, 0, QtGui.QTableWidgetItem(titulo_cancion))
+            self.vDescargas.tableWidget.setCellWidget(count_row, 1, self.barra_progreso)
             self.vDescargas.tableWidget.setItem(count_row, 2, QtGui.QTableWidgetItem(str(size_file_mb) + " MB"))
             self.vDescargas.tableWidget.setItem(count_row, 3, QtGui.QTableWidgetItem("Pendiente"))
             self.vDescargas.tableWidget.setRowHeight(count_row, 19)
@@ -105,16 +108,19 @@ class FrmDescargas(QtGui.QWidget):
         print('rutas', self.list_rutas)
         print('url', self.list_videos)
         count = 0
+        QtCore.QCoreApplication.processEvents()
         for url in self.list_videos:
             ruta = self.list_rutas[count]
             try:
-                # urllib.request.urlretrieve(url, file, reporthook=self.progress_report)
+                # urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
                 # QtCore.QCoreApplication.processEvents()
                 print('url ', url, 'ruta ', ruta)
-                t = DownloadThread(url, ruta)
+                # t = DownloadThread(url, ruta)
+                t = Thread(target=self.descargar, args=[url, ruta])
                 threads.append(t)
                 t.start()
                 print(url, ruta)
+                QtCore.QCoreApplication.processEvents()
                 for t in threads:
                     t.join()
                     print("Elapsed time: %s" % (time.time()-start))
@@ -122,15 +128,24 @@ class FrmDescargas(QtGui.QWidget):
                 print('error')
                 continue
             count += 1
+        # print("Elapsed time: %s" % (time.time()-start))
+        QtCore.QCoreApplication.processEvents()
 
     def progress_report(self, block_read, size_block, file_size):
         # total_size_mb = round(((file_size / 1024) / 1024), 2)
         total_download = block_read * size_block
-        # total_download_mb = round(((total_download / 1024) / 1024), 2)
+        total_download_mb = round(((total_download / 1024) / 1024), 2)
+        print(total_download_mb)
+        self.vDescargas.tableWidget.setItem(0, 1, QtGui.QTableWidgetItem("hola" + str(total_download_mb)))
         self.barra_progreso.setMinimum(0)
         self.barra_progreso.setMaximum(file_size)
         self.barra_progreso.setValue(total_download)
         QtCore.QCoreApplication.processEvents()
+
+    def descargar(self, url, ruta):
+        print('entro', url)
+        urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
+        print(url)
 
 
 class DownloadThread(Thread):
@@ -148,10 +163,6 @@ class DownloadThread(Thread):
         total_download = block_read * size_block
         total_download_mb = round(((total_download / 1024) / 1024), 2)
         print(total_download_mb)
-        '''self.barra_progreso.setMinimum(0)
-        self.barra_progreso.setMaximum(file_size)
-        self.barra_progreso.setValue(total_download)'''
-        '''QtCore.QCoreApplication.processEvents()'''
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
