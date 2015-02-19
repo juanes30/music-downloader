@@ -8,6 +8,8 @@ import time
 from threading import Thread
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
+import concurrent.futures
+from threading import Lock
 
 __youtube__ = "https://www.youtube.com"
 
@@ -87,11 +89,6 @@ class FrmDescargas(QtGui.QWidget):
 
             self.list_videos.append(stream_video.url)
             self.list_rutas.append(path_file)
-            print(self.list_videos)
-            print(self.list_rutas)
-
-            '''self.download_video(path_file)
-            QtCore.QCoreApplication.processEvents()'''
 
         else:
             self.mostrar_mensaje('Mensaje Informativo', 'El video no existe, por favor verifique')
@@ -103,40 +100,23 @@ class FrmDescargas(QtGui.QWidget):
 
     def download_video(self):
         # Ejecuta el metodo progress_report para ir mostrando el avance de la descarga
-        start = time.time()
-        threads = []
-        print('rutas', self.list_rutas)
-        print('url', self.list_videos)
         count = 0
         QtCore.QCoreApplication.processEvents()
         for url in self.list_videos:
             ruta = self.list_rutas[count]
             try:
-                # urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
-                # QtCore.QCoreApplication.processEvents()
-                print('url ', url, 'ruta ', ruta)
-                # t = DownloadThread(url, ruta)
-                t = Thread(target=self.descargar, args=[url, ruta])
-                threads.append(t)
-                t.start()
-                print(url, ruta)
-                QtCore.QCoreApplication.processEvents()
-                for t in threads:
-                    t.join()
-                    print("Elapsed time: %s" % (time.time()-start))
+                urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
             except ValueError:
                 print('error')
                 continue
             count += 1
-        # print("Elapsed time: %s" % (time.time()-start))
         QtCore.QCoreApplication.processEvents()
 
     def progress_report(self, block_read, size_block, file_size):
         # total_size_mb = round(((file_size / 1024) / 1024), 2)
         total_download = block_read * size_block
         total_download_mb = round(((total_download / 1024) / 1024), 2)
-        print(total_download_mb)
-        self.vDescargas.tableWidget.setItem(0, 1, QtGui.QTableWidgetItem("hola" + str(total_download_mb)))
+        self.vDescargas.tableWidget.setItem(0, 1, QtGui.QTableWidgetItem(str(total_download_mb)))
         self.barra_progreso.setMinimum(0)
         self.barra_progreso.setMaximum(file_size)
         self.barra_progreso.setValue(total_download)
