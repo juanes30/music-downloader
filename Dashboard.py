@@ -65,11 +65,8 @@ class FrmDescargas(QtGui.QWidget):
 
             # Agregando una nueva fila al QTableWidget
             count_row = self.vDescargas.tableWidget.rowCount()
-            self.barra_progreso = QtGui.QProgressBar(self)
-            self.barra_progreso.setProperty("value", 0)
             self.vDescargas.tableWidget.insertRow(count_row)
             self.vDescargas.tableWidget.setItem(count_row, 0, QtGui.QTableWidgetItem(titulo_cancion))
-            self.vDescargas.tableWidget.setCellWidget(count_row, 1, self.barra_progreso)
             self.vDescargas.tableWidget.setItem(count_row, 2, QtGui.QTableWidgetItem(str(size_file_mb) + " MB"))
             self.vDescargas.tableWidget.setItem(count_row, 3, QtGui.QTableWidgetItem("Pendiente"))
             self.vDescargas.tableWidget.setRowHeight(count_row, 19)
@@ -113,36 +110,16 @@ class FrmDescargas(QtGui.QWidget):
         QtCore.QCoreApplication.processEvents()
 
     def progress_report(self, block_read, size_block, file_size):
-        # total_size_mb = round(((file_size / 1024) / 1024), 2)
-        total_download = block_read * size_block
-        total_download_mb = round(((total_download / 1024) / 1024), 2)
-        self.vDescargas.tableWidget.setItem(0, 1, QtGui.QTableWidgetItem(str(total_download_mb)))
-        self.barra_progreso.setMinimum(0)
-        self.barra_progreso.setMaximum(file_size)
-        self.barra_progreso.setValue(total_download)
-        QtCore.QCoreApplication.processEvents()
-
-    def descargar(self, url, ruta):
-        print('entro', url)
-        urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
-        print(url)
-
-
-class DownloadThread(Thread):
-    def __init__(self, url, file):
-        self.url = url
-        self.file = file
-        super(DownloadThread, self).__init__()
-
-    def run(self):
-        urllib.request.urlretrieve(self.url, self.file, reporthook=self.progress_report)
-        print(self.url)
-
-    def progress_report(self, block_read, size_block, file_size):
         total_size_mb = round(((file_size / 1024) / 1024), 2)
         total_download = block_read * size_block
         total_download_mb = round(((total_download / 1024) / 1024), 2)
-        print(total_download_mb)
+        try:
+            porcentaje = round((total_download_mb * 100) / total_size_mb, 2)
+            self.vDescargas.tableWidget.setItem(0, 1, QtGui.QTableWidgetItem('Total Descargado ' + str(porcentaje)
+                                                                             + "%"))
+        except ZeroDivisionError:
+            print('Divicion Cero')
+        QtCore.QCoreApplication.processEvents()
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
