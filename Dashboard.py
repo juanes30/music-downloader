@@ -4,12 +4,8 @@ import sys
 import pafy
 import os
 import urllib.request
-import time
-from threading import Thread
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
-import concurrent.futures
-from threading import Lock
 
 __youtube__ = "https://www.youtube.com"
 
@@ -36,6 +32,7 @@ class FrmDescargas(QtGui.QWidget):
         self.update_grid()  # Cargamos grid con las propiedades basicas
         self.vDescargas.btnAgregarVideo.clicked.connect(self.add_video)
         self.vDescargas.btnIniciarDescarga.clicked.connect(self.download_video)
+        self.count = 0
         self.list_videos = []
         self.list_rutas = []
 
@@ -97,28 +94,28 @@ class FrmDescargas(QtGui.QWidget):
 
     def download_video(self):
         # Ejecuta el metodo progress_report para ir mostrando el avance de la descarga
-        count = 0
         QtCore.QCoreApplication.processEvents()
         for url in self.list_videos:
-            ruta = self.list_rutas[count]
+            ruta = self.list_rutas[self.count]
             try:
                 urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
             except ValueError:
                 print('error')
                 continue
-            count += 1
+            self.count += 1
         QtCore.QCoreApplication.processEvents()
+        self.list_videos = []
 
     def progress_report(self, block_read, size_block, file_size):
         total_size_mb = round(((file_size / 1024) / 1024), 2)
         total_download = block_read * size_block
         total_download_mb = round(((total_download / 1024) / 1024), 2)
         try:
-            porcentaje = round((total_download_mb * 100) / total_size_mb, 2)
-            self.vDescargas.tableWidget.setItem(0, 1, QtGui.QTableWidgetItem('Total Descargado ' + str(porcentaje)
-                                                                             + "%"))
+            download_percentage = round((total_download_mb * 100) / total_size_mb, 2)
+            self.vDescargas.tableWidget.setItem(self.count, 1, QtGui.QTableWidgetItem('Total Descargado '
+                                                                                      + str(download_percentage) + "%"))
         except ZeroDivisionError:
-            print('Divicion Cero')
+            print('Se produce una Divicion por Cero')
         QtCore.QCoreApplication.processEvents()
 
 if __name__ == "__main__":
