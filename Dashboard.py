@@ -45,6 +45,7 @@ class FrmDescargas(QtGui.QWidget):
         self.vDescargas.tableWidget.setHorizontalHeaderItem(4, QtGui.QTableWidgetItem("Ubicación"))
         self.vDescargas.tableWidget.setColumnWidth(0, 277)
         self.vDescargas.tableWidget.setColumnWidth(1, 170)
+        self.vDescargas.tableWidget.setColumnWidth(3, 75)
         self.vDescargas.tableWidget.setColumnWidth(4, 175)
 
     def add_video(self):
@@ -94,16 +95,20 @@ class FrmDescargas(QtGui.QWidget):
 
     def download_video(self):
         # Ejecuta el metodo progress_report para ir mostrando el avance de la descarga
+        self.vDescargas.btnIniciarDescarga.setEnabled(False)
         QtCore.QCoreApplication.processEvents()
         for url in self.list_videos:
             ruta = self.list_rutas[self.count]
             try:
                 urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
+                self.vDescargas.tableWidget.setItem(self.count, 1, QtGui.QTableWidgetItem("Total Descargado 100%"))
+                self.vDescargas.tableWidget.setItem(self.count, 3, QtGui.QTableWidgetItem("Completado"))
             except ValueError:
                 print('error')
                 continue
             self.count += 1
         QtCore.QCoreApplication.processEvents()
+        self.vDescargas.btnIniciarDescarga.setEnabled(True)
         self.list_videos = []
 
     def progress_report(self, block_read, size_block, file_size):
