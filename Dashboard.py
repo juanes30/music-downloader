@@ -30,11 +30,33 @@ class FrmDescargas(QtGui.QWidget):
         self.vDescargas.setupUi(self)
         self.setWindowTitle("Descargas")
         self.update_grid()  # Cargamos grid con las propiedades basicas
+        self.fill_combo_formats()
         self.vDescargas.btnAgregarVideo.clicked.connect(self.add_video)
         self.vDescargas.btnIniciarDescarga.clicked.connect(self.download_video)
         self.count = 0
         self.list_videos = []
         self.list_rutas = []
+
+    def fill_combo_formats(self):
+        icon_mp4 = QtGui.QIcon()
+        icon_mp4.addPixmap(QtGui.QPixmap("images/icon_mp4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.vDescargas.cBoxFormato.addItem(icon_mp4, "mp4")
+
+        icon_3gp = QtGui.QIcon()
+        icon_3gp.addPixmap(QtGui.QPixmap("images/icon_3gp.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.vDescargas.cBoxFormato.addItem(icon_3gp, "3gp")
+
+        icon_webm = QtGui.QIcon()
+        icon_webm.addPixmap(QtGui.QPixmap("images/icon_webm.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.vDescargas.cBoxFormato.addItem(icon_webm, "webm")
+
+        icon_flv = QtGui.QIcon()
+        icon_flv.addPixmap(QtGui.QPixmap("images/icon_flv.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.vDescargas.cBoxFormato.addItem(icon_flv, "flv")
+
+        icon_mp3 = QtGui.QIcon()
+        icon_mp3.addPixmap(QtGui.QPixmap("images/icon_mp3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.vDescargas.cBoxFormato.addItem(icon_mp3, "mp3")
 
     def update_grid(self):
         self.vDescargas.tableWidget.setColumnCount(5)
@@ -56,7 +78,8 @@ class FrmDescargas(QtGui.QWidget):
             # Obtener Propiedades del video
             v_pafy = pafy.new(url_video)
             titulo_cancion = v_pafy.title
-            stream_video = v_pafy.getbest(preftype='mp4')
+            file_format = self.vDescargas.cBoxFormato.currentText()
+            stream_video = v_pafy.getbest(preftype=file_format)
             file_extension = stream_video.extension
             size_file = stream_video.get_filesize()
             size_file_mb = round(((size_file / 1024) / 1024), 2)
