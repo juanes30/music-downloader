@@ -3,6 +3,7 @@ __author__ = "Juan Esteban Londoño Tabares"
 import sys
 import pafy
 import os
+import subprocess
 import urllib.request
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
@@ -36,6 +37,7 @@ class FrmDescargas(QtGui.QWidget):
         self.count = 0
         self.list_videos = []
         self.list_rutas = []
+        self.file_format = "mp4"
 
     def fill_combo_formats(self):
         icon_mp4 = QtGui.QIcon()
@@ -73,16 +75,24 @@ class FrmDescargas(QtGui.QWidget):
     def add_video(self):
         if len(self.vDescargas.txtUrlVideo.text()) != 0:
             global path_file
+            global titulo_cancion
             url_video = self.vDescargas.txtUrlVideo.text()
 
             # Obtener Propiedades del video
             v_pafy = pafy.new(url_video)
             titulo_cancion = v_pafy.title
-            file_format = self.vDescargas.cBoxFormato.currentText()
-            stream_video = v_pafy.getbest(preftype=file_format)
-            file_extension = stream_video.extension
-            size_file = stream_video.get_filesize()
-            size_file_mb = round(((size_file / 1024) / 1024), 2)
+            self.file_format = self.vDescargas.cBoxFormato.currentText()
+
+            if self.file_format == "mp3":
+                stream = v_pafy.getbestaudio()
+                file_extension = stream.extension
+                size_file = stream.get_filesize()
+                size_file_mb = round(((size_file / 1024) / 1024), 2)
+            else:
+                stream = v_pafy.getbest(preftype=self.file_format)
+                file_extension = stream.extension
+                size_file = stream.get_filesize()
+                size_file_mb = round(((size_file / 1024) / 1024), 2)
 
             # Agregando una nueva fila al QTableWidget
             count_row = self.vDescargas.tableWidget.rowCount()
@@ -105,7 +115,7 @@ class FrmDescargas(QtGui.QWidget):
                 path_file = os.path.join(os.environ["USERPROFILE"]
                                          , 'Desktop', titulo_cancion) + '.' + file_extension
 
-            self.list_videos.append(stream_video.url)
+            self.list_videos.append(stream.url)
             self.list_rutas.append(path_file)
 
         else:
@@ -126,6 +136,12 @@ class FrmDescargas(QtGui.QWidget):
                 urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
                 self.vDescargas.tableWidget.setItem(self.count, 1, QtGui.QTableWidgetItem("Total Descargado 100%"))
                 self.vDescargas.tableWidget.setItem(self.count, 3, QtGui.QTableWidgetItem("Completado"))
+                if self.file_format == "mp3":
+                    m4a = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo_cancion) + '.' + 'm4a'
+                    mp3 = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo_cancion) + '.' + 'mp3'
+                    self.convert_mp3('./ffmpeg -i \"%s\" -y \"%s\"' % (m4a, mp3))
+                    os.remove(m4a)
+
             except ValueError:
                 print('error')
                 continue
@@ -145,6 +161,17 @@ class FrmDescargas(QtGui.QWidget):
         except ZeroDivisionError:
             print('Se produce una Divicion por Cero')
         QtCore.QCoreApplication.processEvents()
+
+    @staticmethod
+    def convert_mp3(var_archivo):
+        if 'win32' in sys.platform:
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            with (subprocess.Popen(var_archivo, stdout=subprocess.PIPE, startupinfo=startupinfo)):
+                return
+        else:
+            os.system('chmod +x ffmpeg')
+            subprocess.check_output(var_archivo, shell=True)
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
