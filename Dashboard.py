@@ -37,6 +37,8 @@ class FrmDescargas(QtGui.QWidget):
         self.count = 0
         self.list_videos = []
         self.list_rutas = []
+        self.list_formato = []
+        self.list_titulo_cancion = []
         self.file_format = "mp4"
 
     def fill_combo_formats(self):
@@ -75,7 +77,6 @@ class FrmDescargas(QtGui.QWidget):
     def add_video(self):
         if len(self.vDescargas.txtUrlVideo.text()) != 0:
             global path_file
-            global titulo_cancion
             url_video = self.vDescargas.txtUrlVideo.text()
 
             # Obtener Propiedades del video
@@ -117,6 +118,8 @@ class FrmDescargas(QtGui.QWidget):
 
             self.list_videos.append(stream.url)
             self.list_rutas.append(path_file)
+            self.list_formato.append(self.vDescargas.cBoxFormato.currentText())
+            self.list_titulo_cancion.append(titulo_cancion)
 
         else:
             self.mostrar_mensaje('Mensaje Informativo', 'El video no existe, por favor verifique')
@@ -132,13 +135,15 @@ class FrmDescargas(QtGui.QWidget):
         QtCore.QCoreApplication.processEvents()
         for url in self.list_videos:
             ruta = self.list_rutas[self.count]
+            formato = self.list_formato[self.count]
+            titulo = self.list_titulo_cancion[self.count]
             try:
                 urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
                 self.vDescargas.tableWidget.setItem(self.count, 1, QtGui.QTableWidgetItem("Total Descargado 100%"))
                 self.vDescargas.tableWidget.setItem(self.count, 3, QtGui.QTableWidgetItem("Completado"))
-                if self.file_format == "mp3":
-                    m4a = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo_cancion) + '.' + 'm4a'
-                    mp3 = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo_cancion) + '.' + 'mp3'
+                if formato == "mp3":
+                    m4a = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo) + '.' + 'm4a'
+                    mp3 = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo) + '.' + 'mp3'
                     self.convert_mp3('./ffmpeg -i \"%s\" -y \"%s\"' % (m4a, mp3))
                     os.remove(m4a)
 
