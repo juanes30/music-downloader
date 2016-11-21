@@ -1,5 +1,3 @@
-__author__ = "Juan Esteban Londoño Tabares"
-
 import sys
 import pafy
 import os
@@ -8,6 +6,7 @@ import urllib.request
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
 
+__author__ = "Juan Esteban Londoño Tabares"
 __youtube__ = "https://www.youtube.com"
 
 
@@ -113,8 +112,7 @@ class FrmDescargas(QtGui.QWidget):
             titulo_cancion = str(titulo_cancion).replace(')', '')
 
             if 'win32' in sys.platform or 'win64' in sys.platform:
-                path_file = os.path.join(os.environ["USERPROFILE"]
-                                         , 'Desktop', titulo_cancion) + '.' + file_extension
+                path_file = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo_cancion) + '.' + file_extension
 
             self.list_videos.append(stream.url)
             self.list_rutas.append(path_file)
@@ -125,8 +123,8 @@ class FrmDescargas(QtGui.QWidget):
             self.mostrar_mensaje('Mensaje Informativo', 'El video no existe, por favor verifique')
 
     def mostrar_mensaje(self, titulo, mensaje):
-        mensaje_box = QtGui.QMessageBox(QtGui.QMessageBox.Information, titulo, mensaje, QtGui.QMessageBox.NoButton
-                                        , self)
+        mensaje_box = QtGui.QMessageBox(QtGui.QMessageBox.Information, titulo, mensaje, QtGui.QMessageBox.NoButton,
+                                        self)
         mensaje_box.exec_()
 
     def download_video(self):
@@ -177,6 +175,7 @@ class FrmDescargas(QtGui.QWidget):
         else:
             os.system('chmod +x ffmpeg')
             subprocess.check_output(var_archivo, shell=True)
+
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)

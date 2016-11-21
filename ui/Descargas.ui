@@ -6,97 +6,421 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>507</height>
+    <width>876</width>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../images/logo.ico</normaloff>../images/logo.ico</iconset>
+  </property>
   <property name="inputMethodHints">
    <set>Qt::ImhNone</set>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QPushButton" name="logo_app">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>5</x>
-     <y>27</y>
-     <width>901</width>
-     <height>461</height>
+     <x>40</x>
+     <y>540</y>
+     <width>41</width>
+     <height>31</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/pythonLogo.png</normaloff>../images/pythonLogo.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>33</width>
+     <height>33</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_titulo_carpeta_guardado">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>529</y>
+     <width>271</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>11</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+     <underline>false</underline>
+    </font>
+   </property>
+   <property name="text">
+    <string>Carpeta de Guardado</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_version">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>570</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Version: 0.2.0</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_seleccionar_ruta_guardado">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>559</y>
+     <width>34</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/folder.png</normaloff>../images/folder.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>35</width>
+     <height>35</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_ruta">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>570</y>
+     <width>271</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+     <underline>true</underline>
+     <strikeout>false</strikeout>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="text">
+    <string>Ruta Actual</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="logo_app_3">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>0</y>
+     <width>41</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/googleDrive.png</normaloff>../images/googleDrive.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>25</width>
+     <height>25</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>17</x>
+     <y>30</y>
+     <width>841</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lblUrlVideo">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>50</y>
+     <width>190</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Busca o Ingresa la URL</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_titulo_formulario">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>0</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>14</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+     <underline>false</underline>
+    </font>
+   </property>
+   <property name="text">
+    <string>Descargar Musica</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="logo_app_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/logo.png</normaloff>../images/logo.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>28</width>
+     <height>28</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="Line" name="line_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>490</y>
+     <width>851</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>79</y>
+     <width>856</width>
+     <height>345</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
-     <widget class="QLabel" name="lblUrlVideo">
-      <property name="font">
-       <font>
-        <family>Segoe UI</family>
-        <pointsize>14</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Ingresa la URL del video</string>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>38</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtUrlVideo">
+          <property name="font">
+           <font>
+            <family>Segoe UI</family>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="inputMethodHints">
+           <set>Qt::ImhHiddenText</set>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>608</width>
+            <height>13</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QPushButton" name="btnBuscar">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../images/buscar.png</normaloff>../images/buscar.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>42</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="btnAgregarVideo">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../images/agregar.png</normaloff>../images/agregar.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>42</width>
+            <height>42</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLineEdit" name="txtUrlVideo">
-        <property name="font">
-         <font>
-          <family>Segoe UI</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="inputMethodHints">
-         <set>Qt::ImhHiddenText</set>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btnAgregarVideo">
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../images/agregar.png</normaloff>../images/agregar.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>42</width>
-          <height>42</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>13</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item>
        <widget class="QLabel" name="lblFormato">
         <property name="font">
@@ -114,7 +438,7 @@
        <widget class="QComboBox" name="cBoxFormato"/>
       </item>
       <item>
-       <spacer name="horizontalSpacer_3">
+       <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -128,6 +452,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="btnIniciarDescarga">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -153,7 +480,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>388</width>
+          <width>398</width>
           <height>20</height>
          </size>
         </property>
@@ -166,6 +493,18 @@
     </item>
    </layout>
   </widget>
+  <zorder>lblUrlVideo</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>logo_app</zorder>
+  <zorder>lbl_titulo_carpeta_guardado</zorder>
+  <zorder>lbl_version</zorder>
+  <zorder>btn_seleccionar_ruta_guardado</zorder>
+  <zorder>lbl_ruta</zorder>
+  <zorder>logo_app_3</zorder>
+  <zorder>line</zorder>
+  <zorder>lbl_titulo_formulario</zorder>
+  <zorder>logo_app_2</zorder>
+  <zorder>line_3</zorder>
  </widget>
  <resources/>
  <connections/>
