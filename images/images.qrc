@@ -1,0 +1,28 @@
+<RCC>
+  <qresource prefix="images">
+    <file>agregar.png</file>
+    <file>buscar.png</file>
+    <file>compartir.png</file>
+    <file>config.png</file>
+    <file>config2.png</file>
+    <file>Descargas.png</file>
+    <file>folder.png</file>
+    <file>googleDrive.png</file>
+    <file>googlePlus.png</file>
+    <file>icon_3gp.png</file>
+    <file>icon_flv.png</file>
+    <file>icon_mp3.png</file>
+    <file>icon_mp4.png</file>
+    <file>icon_webm.png</file>
+    <file>images.qrc</file>
+    <file>loaderBlue2.gif</file>
+    <file>logo.ico</file>
+    <file>logo.png</file>
+    <file>mensaje.png</file>
+    <file>play.png</file>
+    <file>pythonLogo.png</file>
+    <file>reproducir.png</file>
+    <file>user.png</file>
+    <file>userLogin.png</file>
+  </qresource>
+</RCC>
