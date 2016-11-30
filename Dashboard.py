@@ -5,6 +5,7 @@ import subprocess
 import urllib.request
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
+from ui.Login import UiLogin
 
 __author__ = "Juan Esteban Londoño Tabares"
 __youtube__ = "https://www.youtube.com"
@@ -177,10 +178,19 @@ class FrmDescargas(QtGui.QWidget):
             subprocess.check_output(var_archivo, shell=True)
 
 
+class FrmLogin(QtGui.QWidget):
+    def __init__(self, parent=None):
+        super(FrmLogin, self).__init__(parent)
+        self.vLogin = UiLogin()
+        self.vLogin.setup_ui(self)
+
+
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
     frm_dasboard = FrmDashboard()
-    frm_dasboard.show()
+    frm_dasboard.hide()
     frm_descargas = FrmDescargas()
     frm_descargas.hide()
+    frm_login = FrmLogin()
+    frm_login.show()
     sys.exit(app_music.exec_())

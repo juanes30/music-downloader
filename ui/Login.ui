@@ -434,12 +434,18 @@
     <pointsize>12</pointsize>
    </font>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <property name="windowIcon">
    <iconset>
     <normaloff>../images/logo.ico</normaloff>../images/logo.ico</iconset>
+  </property>
+  <property name="inputMethodHints">
+   <set>Qt::ImhHiddenText</set>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
@@ -459,7 +465,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_titulo">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -500,7 +506,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="label_version">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -523,27 +529,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>240</y>
-     <width>231</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>310</y>
-     <width>231</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pBtn_Ingresar">
    <property name="geometry">
     <rect>
      <x>310</x>
@@ -558,6 +544,9 @@
      <pointsize>11</pointsize>
     </font>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(33,150,243);</string>
    </property>
@@ -568,7 +557,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="pBtn_registrarse">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -583,6 +572,9 @@
      <pointsize>11</pointsize>
     </font>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="text">
     <string>REGISTRARSE</string>
    </property>
@@ -590,7 +582,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_usuario">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -608,7 +600,7 @@
     <string>Usuario</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_password">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -626,23 +618,61 @@
     <string>Contraseña</string>
    </property>
   </widget>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="QPushButton" name="btn_images_usuario">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>230</x>
-     <y>90</y>
-     <width>131</width>
-     <height>131</height>
+     <y>100</y>
+     <width>111</width>
+     <height>101</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background-image: url(:/images/userLogin.png);
-background-repeat: no-repeat;</string>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../images/userLogin.png</normaloff>
+     <disabledoff>../images/userLogin.png</disabledoff>
+     <disabledon>../images/userLogin.png</disabledon>../images/userLogin.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>94</width>
+     <height>94</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="line_edit_usuario">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>240</y>
+     <width>231</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="line_edit_password">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>310</y>
+     <width>231</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="../images/images.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
