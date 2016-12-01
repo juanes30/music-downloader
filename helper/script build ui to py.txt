@@ -1,0 +1,3 @@
+CD C:\Python34\Scripts
+
+pyside-uic -o C:\Users\juan.londono\Proyectos\PycharmProjects\juanes30-musica\ui\Login.py C:\Users\juan.londono\Proyectos\PycharmProjects\juanes30-musica\ui\Login.ui
