@@ -3,21 +3,31 @@
     <words>
       <w>abrir</w>
       <w>agregando</w>
+      <w>argumento</w>
+      <w>argumentos</w>
       <w>barra</w>
       <w>basicas</w>
       <w>buscar</w>
       <w>cancion</w>
       <w>canción</w>
       <w>cargamos</w>
+      <w>clave</w>
+      <w>cliente</w>
+      <w>completo</w>
+      <w>correo</w>
+      <w>creamos</w>
       <w>datos</w>
       <w>declaracion</w>
       <w>descargar</w>
       <w>descargas</w>
+      <w>diccionario</w>
       <w>entro</w>
+      <w>enviados</w>
       <w>estado</w>
       <w>existe</w>
       <w>fila</w>
       <w>fuente</w>
+      <w>genero</w>
       <w>hola</w>
       <w>información</w>
       <w>informativo</w>
@@ -30,6 +40,7 @@
       <w>mongo</w>
       <w>mostrar</w>
       <w>musica</w>
+      <w>nombre</w>
       <w>nueva</w>
       <w>obtenemos</w>
       <w>obtener</w>
@@ -45,6 +56,7 @@
       <w>titulo</w>
       <w>ubicación</w>
       <w>userprofile</w>
+      <w>usuario</w>
       <w>verifique</w>
       <w>webm</w>
     </words>

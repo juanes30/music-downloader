@@ -205,8 +205,7 @@ class FrmLogin(QtGui.QWidget):
                 'weeksAtOne': 16
             }
         ]
-        d.insert_db(name_object="Cliente", data=SEED_DATA)
-
+        # d.insert_db(name_object="Cliente", data=SEED_DATA)
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
