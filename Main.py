@@ -6,6 +6,7 @@ import urllib.request
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
 from ui.Login import UiLogin
+from dal.Database import Database
 
 __author__ = "Juan Esteban Londoño Tabares"
 __youtube__ = "https://www.youtube.com"
@@ -183,6 +184,28 @@ class FrmLogin(QtGui.QWidget):
         super(FrmLogin, self).__init__(parent)
         self.vLogin = UiLogin()
         self.vLogin.setup_ui(self)
+        d = Database()
+        SEED_DATA = [
+            {
+                'decade': '1970s',
+                'artist': 'Debby Boone',
+                'song': 'You Light Up My Life',
+                'weeksAtOne': 10
+            },
+            {
+                'decade': '1980s',
+                'artist': 'Olivia Newton-John',
+                'song': 'Physical',
+                'weeksAtOne': 10
+            },
+            {
+                'decade': '1990s',
+                'artist': 'Mariah Carey',
+                'song': 'One Sweet Day',
+                'weeksAtOne': 16
+            }
+        ]
+        d.insert_db(name_object="Cliente", data=SEED_DATA)
 
 
 if __name__ == "__main__":
