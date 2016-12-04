@@ -2,7 +2,9 @@
   <dictionary name="Juan.Londono">
     <words>
       <w>abrir</w>
+      <w>actualiza</w>
       <w>agregando</w>
+      <w>almacenado</w>
       <w>argumento</w>
       <w>argumentos</w>
       <w>barra</w>
@@ -16,11 +18,15 @@
       <w>completo</w>
       <w>correo</w>
       <w>creamos</w>
+      <w>crear</w>
       <w>datos</w>
       <w>declaracion</w>
       <w>descargar</w>
       <w>descargas</w>
+      <w>desde</w>
       <w>diccionario</w>
+      <w>elementos</w>
+      <w>eliminar</w>
       <w>entro</w>
       <w>enviados</w>
       <w>estado</w>
@@ -28,11 +34,17 @@
       <w>fila</w>
       <w>fuente</w>
       <w>genero</w>
+      <w>guardo</w>
       <w>hola</w>
       <w>información</w>
       <w>informativo</w>
+      <w>inserta</w>
+      <w>insertamos</w>
       <w>juanes</w>
+      <w>leemos</w>
       <w>limpiar</w>
+      <w>lista</w>
+      <w>llave</w>
       <w>londoño</w>
       <w>manejo</w>
       <w>mensaje</w>
@@ -48,6 +60,8 @@
       <w>pendiente</w>
       <w>progreso</w>
       <w>propiedades</w>
+      <w>registros</w>
+      <w>resultado</w>
       <w>ruta</w>
       <w>rutas</w>
       <w>segoe</w>
@@ -57,6 +71,8 @@
       <w>ubicación</w>
       <w>userprofile</w>
       <w>usuario</w>
+      <w>validamos</w>
+      <w>varios</w>
       <w>verifique</w>
       <w>webm</w>
     </words>

@@ -3,6 +3,8 @@ import pafy
 import os
 import subprocess
 import urllib.request
+
+from helper.Encrypt import Encrypt
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
 from ui.Login import UiLogin
@@ -206,6 +208,7 @@ class FrmLogin(QtGui.QWidget):
             }
         ]
         # d.insert_db(name_object="Cliente", data=SEED_DATA)
+
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
