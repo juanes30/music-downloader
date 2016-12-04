@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'C:\Users\juan.londono\Proyectos\PycharmProjects\juanes30-musica\ui\Login.ui'
 #
-# Created: Wed Nov 30 13:58:02 2016
+# Created: Sun Dec  4 10:22:11 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -190,7 +190,7 @@ class UiLogin(object):
         self.label_version.setStyleSheet("color: rgb(255, 255, 255);")
         self.label_version.setObjectName("label_version")
         self.pBtn_Ingresar = QtGui.QPushButton(dialog)
-        self.pBtn_Ingresar.setGeometry(QtCore.QRect(310, 370, 81, 23))
+        self.pBtn_Ingresar.setGeometry(QtCore.QRect(310, 390, 81, 23))
         font = QtGui.QFont()
         font.setFamily("Segoe UI Light")
         font.setPointSize(11)
@@ -200,7 +200,7 @@ class UiLogin(object):
         self.pBtn_Ingresar.setFlat(True)
         self.pBtn_Ingresar.setObjectName("pBtn_Ingresar")
         self.pBtn_registrarse = QtGui.QPushButton(dialog)
-        self.pBtn_registrarse.setGeometry(QtCore.QRect(160, 370, 91, 23))
+        self.pBtn_registrarse.setGeometry(QtCore.QRect(160, 390, 91, 23))
         font = QtGui.QFont()
         font.setFamily("Segoe UI Light")
         font.setPointSize(11)
@@ -215,7 +215,7 @@ class UiLogin(object):
         self.label_usuario.setFont(font)
         self.label_usuario.setObjectName("label_usuario")
         self.label_password = QtGui.QLabel(dialog)
-        self.label_password.setGeometry(QtCore.QRect(160, 290, 81, 16))
+        self.label_password.setGeometry(QtCore.QRect(160, 300, 81, 16))
         font = QtGui.QFont()
         font.setFamily("Segoe UI Light")
         self.label_password.setFont(font)
@@ -225,8 +225,8 @@ class UiLogin(object):
         self.btn_images_usuario.setGeometry(QtCore.QRect(230, 100, 111, 101))
         self.btn_images_usuario.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("images/userLogin.png"), QtGui.QIcon.Disabled, QtGui.QIcon.On)
         icon1.addPixmap(QtGui.QPixmap("images/userLogin.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("images/userLogin.png"), QtGui.QIcon.Disabled, QtGui.QIcon.On)
         icon1.addPixmap(QtGui.QPixmap("images/userLogin.png"), QtGui.QIcon.Disabled, QtGui.QIcon.Off)
         self.btn_images_usuario.setIcon(icon1)
         self.btn_images_usuario.setIconSize(QtCore.QSize(94, 94))
@@ -236,9 +236,27 @@ class UiLogin(object):
         self.line_edit_usuario.setGeometry(QtCore.QRect(160, 240, 231, 31))
         self.line_edit_usuario.setObjectName("line_edit_usuario")
         self.line_edit_password = QtGui.QLineEdit(dialog)
-        self.line_edit_password.setGeometry(QtCore.QRect(160, 310, 231, 31))
+        self.line_edit_password.setGeometry(QtCore.QRect(160, 320, 231, 31))
         self.line_edit_password.setEchoMode(QtGui.QLineEdit.Password)
         self.line_edit_password.setObjectName("line_edit_password")
+        self.label_usuario_mensaje = QtGui.QLabel(dialog)
+        self.label_usuario_mensaje.setGeometry(QtCore.QRect(160, 270, 291, 21))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI Light")
+        font.setPointSize(10)
+        self.label_usuario_mensaje.setFont(font)
+        self.label_usuario_mensaje.setStyleSheet("color: rgb(255, 0, 0);")
+        self.label_usuario_mensaje.setScaledContents(False)
+        self.label_usuario_mensaje.setObjectName("label_usuario_mensaje")
+        self.label_password_mensaje = QtGui.QLabel(dialog)
+        self.label_password_mensaje.setGeometry(QtCore.QRect(160, 350, 291, 21))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI Light")
+        font.setPointSize(10)
+        self.label_password_mensaje.setFont(font)
+        self.label_password_mensaje.setStyleSheet("color: rgb(255, 0, 0);")
+        self.label_password_mensaje.setScaledContents(False)
+        self.label_password_mensaje.setObjectName("label_password_mensaje")
 
         self.retranslateUi(dialog)
         QtCore.QMetaObject.connectSlotsByName(dialog)
@@ -246,9 +264,11 @@ class UiLogin(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
         self.label_titulo.setText(QtGui.QApplication.translate("Dialog", "Juanes 30 Music Descargas", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_version.setText(QtGui.QApplication.translate("Dialog", "Version: 0.2.0, Este software se realiza con el fin de aprender python", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_version.setText(QtGui.QApplication.translate("Dialog", "Version: 0.0.0, Este software se realiza con el fin de aprender python", None, QtGui.QApplication.UnicodeUTF8))
         self.pBtn_Ingresar.setText(QtGui.QApplication.translate("Dialog", "INGRESAR", None, QtGui.QApplication.UnicodeUTF8))
         self.pBtn_registrarse.setText(QtGui.QApplication.translate("Dialog", "REGISTRARSE", None, QtGui.QApplication.UnicodeUTF8))
         self.label_usuario.setText(QtGui.QApplication.translate("Dialog", "Usuario", None, QtGui.QApplication.UnicodeUTF8))
         self.label_password.setText(QtGui.QApplication.translate("Dialog", "Contraseña", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_usuario_mensaje.setText(QtGui.QApplication.translate("Dialog", "Mensaje Error", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_password_mensaje.setText(QtGui.QApplication.translate("Dialog", "Mensaje Error", None, QtGui.QApplication.UnicodeUTF8))
 

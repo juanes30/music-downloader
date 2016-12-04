@@ -4,6 +4,7 @@ import os
 import subprocess
 import urllib.request
 
+from Login import Login
 from helper.Encrypt import Encrypt
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
@@ -181,32 +182,32 @@ class FrmDescargas(QtGui.QWidget):
             subprocess.check_output(var_archivo, shell=True)
 
 
-class FrmLogin(QtGui.QWidget):
-    def __init__(self, parent=None):
-        super(FrmLogin, self).__init__(parent)
-        self.vLogin = UiLogin()
-        self.vLogin.setup_ui(self)
-        d = Database()
-        SEED_DATA = [
-            {
-                'decade': '1970s',
-                'artist': 'Debby Boone',
-                'song': 'You Light Up My Life',
-                'weeksAtOne': 10
-            },
-            {
-                'decade': '1980s',
-                'artist': 'Olivia Newton-John',
-                'song': 'Physical',
-                'weeksAtOne': 10
-            },
-            {
-                'decade': '1990s',
-                'artist': 'Mariah Carey',
-                'song': 'One Sweet Day',
-                'weeksAtOne': 16
-            }
-        ]
+# class FrmLogin(QtGui.QWidget):
+#     def __init__(self, parent=None):
+#         super(FrmLogin, self).__init__(parent)
+#         self.vLogin = UiLogin()
+#         self.vLogin.setup_ui(self)
+#         d = Database()
+#         SEED_DATA = [
+#             {
+#                 'decade': '1970s',
+#                 'artist': 'Debby Boone',
+#                 'song': 'You Light Up My Life',
+#                 'weeksAtOne': 10
+#             },
+#             {
+#                 'decade': '1980s',
+#                 'artist': 'Olivia Newton-John',
+#                 'song': 'Physical',
+#                 'weeksAtOne': 10
+#             },
+#             {
+#                 'decade': '1990s',
+#                 'artist': 'Mariah Carey',
+#                 'song': 'One Sweet Day',
+#                 'weeksAtOne': 16
+#             }
+#         ]
         # d.insert_db(name_object="Cliente", data=SEED_DATA)
 
 
@@ -216,6 +217,6 @@ if __name__ == "__main__":
     frm_dasboard.hide()
     frm_descargas = FrmDescargas()
     frm_descargas.hide()
-    frm_login = FrmLogin()
+    frm_login = Login()
     frm_login.show()
     sys.exit(app_music.exec_())
