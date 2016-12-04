@@ -7,10 +7,12 @@ from helper.Constant import PATH_FILE_KEY_PEM
 class Encrypt:
     @staticmethod
     def generate_key():
+        """ GENERA UNA CLAVE ALEATORIA """
         random_generator = Random.new().read
         return RSA.generate(1024, random_generator)  # return Key
 
     def encrypt(self, data_to_encrypt):
+        """ ENCRYPTA  UN TEXTO"""
         data_to_encrypt_byte = bytes(data_to_encrypt, 'ASCII')
         key = self.get_key_file()
         public_key = key.publickey()
@@ -19,19 +21,20 @@ class Encrypt:
 
     @staticmethod
     def decrypt(encrypt_data, key):
+        """ DESENCRYPTA UN TEXTO """
         value = key.decrypt(encrypt_data)
         return str(value, 'utf-8')
 
     @staticmethod
     def create_key_file():
-        # Crear key file PEM
+        """ Crear key file PEM """
         key = RSA.generate(2048)
         file_pem = open(PATH_FILE_KEY_PEM, "wb")
         file_pem.write(key.exportKey())
         file_pem.close()
 
     def get_key_file(self):
-        # Obtenemos la llave almacenado en el archivo
+        """ Obtener la llave almacenado en el archivo """
         file = Path()
         # Validamos si el archivo existe
         if not file.is_file():
