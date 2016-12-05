@@ -1,7 +1,9 @@
 from PySide import QtGui
 
+from core.LoginCore import LoginCore
 from helper import Constant
 from helper.Enums import Enums
+from model.UsuarioModel import UsuarioModel
 from ui.Login import UiLogin
 
 
@@ -23,7 +25,7 @@ class Login(QtGui.QWidget):
 
         # Eventos de los Controles
         self.login.pBtn_Ingresar.clicked.connect(self.attempt_login)
-
+        self.login.pBtn_registrarse.clicked.connect(self.attempt_register)
         # Ejecutamos las funciones
         self.init_ui()
 
@@ -43,15 +45,46 @@ class Login(QtGui.QWidget):
         y consultas necesarias para el ingreso
         """
         self.init_ui()  # limpiamos los errores, si los habian
+        flag_login = True
 
         resultado, enum_login, mensaje = self.validation_required_field()  # Validamos la contraseña
         if not resultado:  # Si el resultado es {False}, entonces validamos cual fue el problema
             if enum_login == self.enum_login.ERROR_USER:  # Si hay problemas con el campo Usuario
                 self.label_usuario_mensaje.setVisible(True)
                 self.label_usuario_mensaje.setText(mensaje)
+                flag_login = False
             elif enum_login == self.enum_login.ERROR_PASSWORD:  # Si hay problemas con el campo Password
                 self.label_password_mensaje.setVisible(True)
                 self.label_password_mensaje.setText(mensaje)
+                flag_login = False
+
+        if flag_login:  # si no hay problemas de validaciones intentamos ingresar.
+            login_core = LoginCore()
+            usuario_model = UsuarioModel(usuario=self.line_edit_usuario.text(), clave=self.line_edit_password.text())
+            login_core.login_core(usuario_model=usuario_model)
+
+    def attempt_register(self):
+        """ Tratamos de realizar el login realizando todas las validaciones
+        y consultas necesarias para el ingreso
+        """
+        self.init_ui()  # limpiamos los errores, si los habian
+        flag_register = True
+
+        resultado, enum_login, mensaje = self.validation_required_field()  # Validamos la contraseña
+        if not resultado:  # Si el resultado es {False}, entonces validamos cual fue el problema
+            if enum_login == self.enum_login.ERROR_USER:  # Si hay problemas con el campo Usuario
+                self.label_usuario_mensaje.setVisible(True)
+                self.label_usuario_mensaje.setText(mensaje)
+                flag_register = False
+            elif enum_login == self.enum_login.ERROR_PASSWORD:  # Si hay problemas con el campo Password
+                self.label_password_mensaje.setVisible(True)
+                self.label_password_mensaje.setText(mensaje)
+                flag_register = False
+
+        if flag_register:  # si no hay problemas de validaciones intentamos ingresar.
+            login_core = LoginCore()
+            usuario_model = UsuarioModel(usuario=self.line_edit_usuario.text(), clave=self.line_edit_password.text())
+            login_core.register_user(usuario_model=usuario_model)
 
     def validation_required_field(self):
         """ Validamos que todos los campos esten debidamente llenados """

@@ -9,6 +9,15 @@ class Database:
     def __init__(self):
         self.db = self.mongoClient.get_default_database()  # Obtenemos la base de datos default {music-downloader}
 
+    def select_db(self, name_object, filter_data=None):
+        """ Obtiene uno o todos los registros de una tabla """
+        table = self.db[name_object]
+
+        if filter_data is None:
+            return table
+
+        return table.find_one(filter=filter_data)
+
     def insert_db(self, name_object, data):
         """ INSERTA UNO O VARIOS REGISTROS """
         table = self.db[name_object]  # Creamos u obtenemos la tabla desde mongo
