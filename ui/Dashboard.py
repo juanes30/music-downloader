@@ -11,7 +11,7 @@ from PySide import QtCore, QtGui
 
 class Ui_Form(object):
     def setupUi(self, Form):
-        Form.setObjectName("Form")
+        Form.setObjectName("FrmDashboard")
         Form.resize(820, 547)
         Form.setWindowFilePath("")
         self.lblDashboard = QtGui.QLabel(Form)

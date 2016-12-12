@@ -3,6 +3,7 @@
     <words>
       <w>abrir</w>
       <w>actualiza</w>
+      <w>agrega</w>
       <w>agregando</w>
       <w>aleatoria</w>
       <w>almacenado</w>
@@ -21,6 +22,7 @@
       <w>cliente</w>
       <w>completo</w>
       <w>configuramos</w>
+      <w>consulta</w>
       <w>consultas</w>
       <w>contraseña</w>
       <w>controla</w>
@@ -44,11 +46,17 @@
       <w>elementos</w>
       <w>eliminar</w>
       <w>encrypta</w>
+      <w>encryptado</w>
+      <w>encryptamos</w>
+      <w>encryptando</w>
+      <w>encryptarlo</w>
       <w>entonces</w>
       <w>entro</w>
       <w>enviados</w>
+      <w>envie</w>
       <w>errores</w>
       <w>estado</w>
+      <w>este</w>
       <w>esten</w>
       <w>eventos</w>
       <w>existe</w>
@@ -60,6 +68,7 @@
       <w>guardo</w>
       <w>habian</w>
       <w>hola</w>
+      <w>informacion</w>
       <w>información</w>
       <w>informativo</w>
       <w>ingresar</w>
@@ -80,25 +89,36 @@
       <w>mensaje</w>
       <w>mensajes</w>
       <w>minimo</w>
+      <w>mismo</w>
       <w>modificar</w>
       <w>mongo</w>
       <w>mostrar</w>
+      <w>muestra</w>
       <w>musica</w>
       <w>necesarias</w>
+      <w>necesario</w>
       <w>nombre</w>
       <w>nueva</w>
+      <w>objecto</w>
+      <w>objeto</w>
       <w>obtenemos</w>
       <w>obtener</w>
       <w>obtiene</w>
+      <w>oculta</w>
       <w>ocurrido</w>
       <w>pafy</w>
+      <w>parametro</w>
       <w>pendiente</w>
       <w>problema</w>
       <w>problemas</w>
       <w>progreso</w>
+      <w>propiedad</w>
       <w>propiedades</w>
+      <w>pudo</w>
       <w>realizando</w>
       <w>realizar</w>
+      <w>recibe</w>
+      <w>recorremos</w>
       <w>registros</w>
       <w>resultado</w>
       <w>ruta</w>
@@ -108,6 +128,7 @@
       <w>tamanio</w>
       <w>tamaño</w>
       <w>texto</w>
+      <w>tipo</w>
       <w>titulo</w>
       <w>todas</w>
       <w>todos</w>
@@ -115,9 +136,12 @@
       <w>ubicación</w>
       <w>userprofile</w>
       <w>usuario</w>
+      <w>vacio</w>
       <w>validacion</w>
       <w>validaciones</w>
       <w>validamos</w>
+      <w>validar</w>
+      <w>validos</w>
       <w>varios</w>
       <w>verifique</w>
       <w>webm</w>

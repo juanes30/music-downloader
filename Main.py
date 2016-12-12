@@ -5,27 +5,11 @@ import subprocess
 import urllib.request
 
 from Login import Login
-from helper.Encrypt import Encrypt
 from ui.Dashboard import *
 from ui.Descargas import Ui_Descargas
-from ui.Login import UiLogin
-from dal.Database import Database
 
 __author__ = "Juan Esteban Londoño Tabares"
 __youtube__ = "https://www.youtube.com"
-
-
-class FrmDashboard(QtGui.QWidget):
-    def __init__(self, parent=None):
-        super(FrmDashboard, self).__init__(parent)
-        self.vDashboard = Ui_Form()
-        self.vDashboard.setupUi(self)
-        self.vDashboard.btnDescargas.clicked.connect(self.abrir_descargas)
-        self.setWindowTitle("Juanes30 Musica")
-
-    @staticmethod
-    def abrir_descargas():
-        frm_descargas.show()
 
 
 class FrmDescargas(QtGui.QWidget):
@@ -213,8 +197,6 @@ class FrmDescargas(QtGui.QWidget):
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
-    frm_dasboard = FrmDashboard()
-    frm_dasboard.hide()
     frm_descargas = FrmDescargas()
     frm_descargas.hide()
     frm_login = Login()

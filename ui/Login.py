@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 
 class UiLogin(object):
     def setup_ui(self, dialog):
-        dialog.setObjectName("Dialog")
+        dialog.setObjectName("Login")
         dialog.setEnabled(True)
         dialog.resize(596, 509)
         palette = QtGui.QPalette()

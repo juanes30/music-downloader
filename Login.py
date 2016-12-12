@@ -1,13 +1,16 @@
 from PySide import QtGui
 
+from Dashboard import FrmDashboard
 from core.LoginCore import LoginCore
 from helper import Constant
+from helper.Encrypt import Encrypt
 from helper.Enums import Enums
+from helper.Utility import Utility
 from model.UsuarioModel import UsuarioModel
 from ui.Login import UiLogin
 
 
-class Login(QtGui.QWidget):
+class Login(QtGui.QMainWindow, UiLogin):
     """ CONTROLA EL FORMULARIO DE LOGIN """
 
     def __init__(self, parent=None):
@@ -15,6 +18,7 @@ class Login(QtGui.QWidget):
         self.login = UiLogin()
         self.login.setup_ui(self)
         self.enum_login = Enums().validation_login()
+        self.dashboard_form = None
 
         # Controles de la vista
         self.label_version = self.login.label_version
@@ -26,10 +30,9 @@ class Login(QtGui.QWidget):
         # Eventos de los Controles
         self.login.pBtn_Ingresar.clicked.connect(self.attempt_login)
         self.login.pBtn_registrarse.clicked.connect(self.attempt_register)
+
         # Ejecutamos las funciones
         self.init_ui()
-
-        # init
 
     def init_ui(self):
         """ Configuramos la UI"""
@@ -59,9 +62,18 @@ class Login(QtGui.QWidget):
                 flag_login = False
 
         if flag_login:  # si no hay problemas de validaciones intentamos ingresar.
-            login_core = LoginCore()
-            usuario_model = UsuarioModel(usuario=self.line_edit_usuario.text(), clave=self.line_edit_password.text())
-            login_core.login_core(usuario_model=usuario_model)
+            try:
+                login_core = LoginCore()
+                encrypt = Encrypt()
+                usuario_model = UsuarioModel(usuario=self.line_edit_usuario.text(),
+                                             clave=self.line_edit_password.text())
+                usuario_model_encrypt = encrypt.encrypt_object(usuario_model)
+                result_login = login_core.login_core(usuario_model=usuario_model_encrypt)
+                if result_login:
+                    self.show_dashboard()
+
+            except Exception as ex:
+                Utility.show_message(Constant.MESSAGE_TITLE_INFORMATION, str(ex), QtGui.QMessageBox.Information)
 
     def attempt_register(self):
         """ Tratamos de realizar el login realizando todas las validaciones
@@ -96,3 +108,15 @@ class Login(QtGui.QWidget):
         elif not password and len(password) < 4:
             return False, self.enum_login.ERROR_PASSWORD, Constant.MESSAGE_ERROR_PASSWORD_TAMANIO
         return True, self.enum_login.SUCCESS, Constant.MESSAGE_SUCCESS_OK
+
+    def show_dashboard(self):
+        """
+        Muestra el formulario de Dashboard y oculta el actual
+        """
+        if not self.dashboard_form:
+            self.dashboard_form = FrmDashboard()
+        if self.dashboard_form.isVisible():
+            self.dashboard_form.hide()
+        else:
+            self.close()
+            self.dashboard_form.show()
