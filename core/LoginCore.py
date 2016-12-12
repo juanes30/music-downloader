@@ -25,11 +25,17 @@ class LoginCore:
         Agrega un usuario a la base de datos encryptando los datos
         enviados por el usuario.
         :param usuario_model: recibe un model {UsuarioModel}
+        :return bool resultado de el registro de un nuevo usuario
         """
         try:
             encrypt = Encrypt()
             usuario_model_encrypt = encrypt.encrypt_object(usuario_model)  # Encrypt el model UsuarioModel.
             usuario_json = eval(json.dumps(usuario_model_encrypt.__dict__))  # Creamos un json del UsuarioModel
-            self.database.insert_db(name_object="Usuario", data=usuario_json)  # Insertamos el usuario en MongoDB
-        except:
-            raise Exception(Constant.MESSAGE_ERROR_LOGIN)
+            find_user = self.database.select_db(name_object="Usuario", filter_data=usuario_json)
+            if isinstance(find_user, object) and find_user is not None:
+                raise Exception(Constant.MESSAGE_ERROR_SIGN_UP_ALREADY_USER)
+
+            # Insertamos el usuario en MongoDB
+            return self.database.insert_db(name_object="Usuario", data=usuario_json)
+        except Exception as ex:
+            raise Exception(Constant.MESSAGE_ERROR_SIGN_UP + "\nError: " + str(ex))

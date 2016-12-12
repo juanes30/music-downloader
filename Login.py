@@ -15,23 +15,15 @@ class Login(QtGui.QMainWindow, UiLogin):
 
     def __init__(self, parent=None):
         super(Login, self).__init__(parent)
-        self.login = UiLogin()
-        self.login.setup_ui(self)
+        self.setup_ui(self)
         self.enum_login = Enums().validation_login()
         self.dashboard_form = None
 
-        # Controles de la vista
-        self.label_version = self.login.label_version
-        self.line_edit_password = self.login.line_edit_password
-        self.line_edit_usuario = self.login.line_edit_usuario
-        self.label_usuario_mensaje = self.login.label_usuario_mensaje
-        self.label_password_mensaje = self.login.label_password_mensaje
-
         # Eventos de los Controles
-        self.login.pBtn_Ingresar.clicked.connect(self.attempt_login)
-        self.login.pBtn_registrarse.clicked.connect(self.attempt_register)
+        self.pBtn_Ingresar.clicked.connect(self.attempt_login)
+        self.pBtn_registrarse.clicked.connect(self.attempt_register)
 
-        # Ejecutamos las funciones
+        # Ejecucion de funciones
         self.init_ui()
 
     def init_ui(self):
@@ -71,6 +63,9 @@ class Login(QtGui.QMainWindow, UiLogin):
                 result_login = login_core.login_core(usuario_model=usuario_model_encrypt)
                 if result_login:
                     self.show_dashboard()
+                else:
+                    Utility.show_message(Constant.MESSAGE_TITLE_INFORMATION, Constant.MESSAGE_ERROR_LOGIN,
+                                         QtGui.QMessageBox.Warning)
 
             except Exception as ex:
                 Utility.show_message(Constant.MESSAGE_TITLE_INFORMATION, str(ex), QtGui.QMessageBox.Information)
@@ -94,9 +89,16 @@ class Login(QtGui.QMainWindow, UiLogin):
                 flag_register = False
 
         if flag_register:  # si no hay problemas de validaciones intentamos ingresar.
-            login_core = LoginCore()
-            usuario_model = UsuarioModel(usuario=self.line_edit_usuario.text(), clave=self.line_edit_password.text())
-            login_core.register_user(usuario_model=usuario_model)
+            try:
+                login_core = LoginCore()
+                usuario_model = UsuarioModel(usuario=self.line_edit_usuario.text(),
+                                             clave=self.line_edit_password.text())
+                result_register = login_core.register_user(usuario_model=usuario_model)
+                if result_register:  # Mensaje de Registro Exitoso
+                    Utility.show_message(Constant.MESSAGE_TITLE_INFORMATION, Constant.MESSAGE_SUCCESS_SIGN_UP,
+                                         QtGui.QMessageBox.Information)
+            except Exception as ex:
+                Utility.show_message(Constant.MESSAGE_TITLE_INFORMATION, str(ex), QtGui.QMessageBox.Critical)
 
     def validation_required_field(self):
         """ Validamos que todos los campos esten debidamente llenados """
