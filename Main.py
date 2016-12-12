@@ -197,8 +197,6 @@ class FrmDescargas(QtGui.QWidget):
 
 if __name__ == "__main__":
     app_music = QtGui.QApplication(sys.argv)
-    frm_descargas = FrmDescargas()
-    frm_descargas.hide()
     frm_login = Login()
     frm_login.show()
     sys.exit(app_music.exec_())
