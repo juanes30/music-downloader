@@ -15,7 +15,6 @@ class Database:
 
         if filter_data is None:
             return table
-
         return table.find_one(filter=filter_data)
 
     def insert_db(self, name_object, data):
