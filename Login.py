@@ -9,6 +9,8 @@ from helper.Utility import Utility
 from model.UsuarioModel import UsuarioModel
 from ui.Login import UiLogin
 
+__author__ = "Juan Esteban Londoño Tabares"
+
 
 class Login(QtGui.QMainWindow, UiLogin):
     """ CONTROLA EL FORMULARIO DE LOGIN """
