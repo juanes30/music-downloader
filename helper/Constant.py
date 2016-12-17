@@ -13,3 +13,6 @@ MESSAGE_ERROR_SIGN_UP_ALREADY_USER = "El usuario ya existe"
 # MENSAJES SATISFATORIOS
 MESSAGE_SUCCESS_OK = "Validacion, correcta"
 MESSAGE_SUCCESS_SIGN_UP = "Se registro exitosamente"
+
+# VARIABLES
+USUARIO = ""

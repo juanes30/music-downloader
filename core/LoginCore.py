@@ -7,6 +7,7 @@ from helper.Encrypt import Encrypt
 
 class LoginCore:
     database = Database()
+    encrypt = Encrypt()
 
     def login_core(self, usuario_model) -> bool:
         """
@@ -17,6 +18,7 @@ class LoginCore:
         usuario_json = eval(json.dumps(usuario_model.__dict__))
         result = self.database.select_db(name_object="Usuario", filter_data=usuario_json)
         if isinstance(result, object) and result is not None:
+            Constant.USUARIO = self.encrypt.decrypt(eval(result["usuario"]))
             return True
         return False
 
@@ -28,8 +30,7 @@ class LoginCore:
         :return bool resultado de el registro de un nuevo usuario
         """
         try:
-            encrypt = Encrypt()
-            usuario_model_encrypt = encrypt.encrypt_object(usuario_model)  # Encrypt el model UsuarioModel.
+            usuario_model_encrypt = self.encrypt.encrypt_object(usuario_model)  # Encrypt el model UsuarioModel.
             usuario_json = eval(json.dumps(usuario_model_encrypt.__dict__))  # Creamos un json del UsuarioModel
             find_user = self.database.select_db(name_object="Usuario", filter_data=usuario_json)
             if isinstance(find_user, object) and find_user is not None:

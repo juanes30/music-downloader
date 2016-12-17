@@ -16,6 +16,7 @@ class FrmDashboard(QtGui.QMainWindow, Ui_Form):
     def init_ui(self):
         version_app = str(self.label_version.text()).replace('0.0.0', Constant.VERSION_APP)
         self.label_version.setText(version_app)
+        self.label_nombre_usuario.setText(Constant.USUARIO)
 
     @staticmethod
     def abrir_descargas():
