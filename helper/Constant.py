@@ -1,6 +1,6 @@
 MONGO_URI = "mongodb://sa:1234@ds119608.mlab.com:19608/music-downloader"
 PATH_FILE_KEY_PEM = "private_key.pem"
-VERSION_APP = "0.3.3"
+VERSION_APP = "0.3.5"
 
 # MENSAJES DE ERRORES
 MESSAGE_ERROR_PASSWORD_TAMANIO = "La contraseña es muy corta, minimo 5 letras. :)"
