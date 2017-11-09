@@ -98,6 +98,12 @@ class FrmDescargas(QtGui.QWidget, UiDescargas):
             titulo_cancion = str(titulo_cancion).replace('-', '')
             titulo_cancion = str(titulo_cancion).replace('(', '')
             titulo_cancion = str(titulo_cancion).replace(')', '')
+            titulo_cancion = str(titulo_cancion).replace('★', '')
+            titulo_cancion = str(titulo_cancion).replace('+', '')
+            titulo_cancion = str(titulo_cancion).replace(':', '')
+            titulo_cancion = str(titulo_cancion).replace('ó', '')
+            titulo_cancion = str(titulo_cancion).replace('ú', '')
+            titulo_cancion = str(titulo_cancion).replace('Ú', '')
 
             if 'win32' in sys.platform or 'win64' in sys.platform:
                 path_file = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo_cancion) + '.' + file_extension

@@ -1,5 +1,6 @@
-from Crypto import Random
-from Crypto.PublicKey import RSA
+from Cryptodome import Random
+from Cryptodome.PublicKey import RSA
+from Cryptodome.Cipher import PKCS1_OAEP
 from pathlib import Path
 
 from helper.Constant import PATH_FILE_KEY_PEM
@@ -16,15 +17,16 @@ class Encrypt:
         """ ENCRYPTA  UN TEXTO"""
         data_to_encrypt_byte = bytes(data_to_encrypt, 'ASCII')
         key = self.get_key_file()
-        public_key = key.publickey()
-        a = public_key.encrypt(data_to_encrypt_byte, 32)  # Encrypt Data
+        cipher_rsa = PKCS1_OAEP.new(key)
+        a = cipher_rsa.encrypt(data_to_encrypt_byte)  # Encrypt Data
         return a
 
     def decrypt(self, encrypt_data, key=None) -> str:
         """ DESENCRYPTA UN TEXTO """
         if key is None:
             key = self.get_key_file()
-        value = key.decrypt(encrypt_data)
+        cipher_rsa = PKCS1_OAEP.new(key)
+        value = cipher_rsa.decrypt(encrypt_data)
         return str(value, 'utf-8')
 
     @staticmethod

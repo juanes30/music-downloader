@@ -7,7 +7,7 @@ class Database:
     mongoClient = MongoClient(MONGO_URI)  # URL de mongo db
 
     def __init__(self):
-        self.db = self.mongoClient.get_default_database()  # Obtenemos la base de datos default {music-downloader}
+        self.db = self.mongoClient.get_database()  # Obtenemos la base de datos default {music-downloader}
 
     def select_db(self, name_object, filter_data=None):
         """ Obtiene uno o todos los registros de una tabla """

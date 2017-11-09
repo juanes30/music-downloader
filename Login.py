@@ -66,6 +66,7 @@ class Login(QtGui.QMainWindow, UiLogin):
                 if result_login:
                     self.show_dashboard()
                 else:
+                    self.show_dashboard()
                     Utility.show_message(Constant.MESSAGE_TITLE_INFORMATION, Constant.MESSAGE_ERROR_LOGIN,
                                          QtGui.QMessageBox.Warning)
 
