@@ -1,3 +1,4 @@
+import threading
 from PySide import QtGui, QtCore
 
 import sys
@@ -6,9 +7,12 @@ import os
 import subprocess
 import urllib.request
 
+from helper.Constant import VERSION_APP
 from ui.Descargas import UiDescargas
 
 __author__ = "Juan Esteban Londoño Tabares"
+
+base_directory = ""
 
 
 class FrmDescargas(QtGui.QWidget, UiDescargas):
@@ -19,14 +23,25 @@ class FrmDescargas(QtGui.QWidget, UiDescargas):
         self.setWindowTitle("Descargas")
         self.update_grid()  # Cargamos grid con las propiedades basicas
         self.fill_combo_formats()
-        self.vDescargas.btnAgregarVideo.clicked.connect(self.add_video)
+        self.vDescargas.btnAgregarVideo.clicked.connect(self.on_click_video)
         self.vDescargas.btnIniciarDescarga.clicked.connect(self.download_video)
+        self.vDescargas.btn_seleccionar_ruta_guardado.clicked.connect(self.seleccionar_carpeta_destino)
         self.count = 0
         self.list_videos = []
         self.list_rutas = []
         self.list_formato = []
         self.list_titulo_cancion = []
         self.file_format = "mp4"
+        str_version = "Version: " + VERSION_APP
+        self.vDescargas.lbl_version.setText(str_version)
+
+        if 'win32' in sys.platform or 'win64' in sys.platform:
+            self.base_directory = os.path.join(os.environ["USERPROFILE"], "Desktop")
+            self.vDescargas.lbl_ruta.setText(self.base_directory)
+
+    def seleccionar_carpeta_destino(self):
+        self.base_directory = str(QtGui.QFileDialog.getExistingDirectory(self, "Seleccione una carpeta"))
+        self.vDescargas.lbl_ruta.setText(self.base_directory)
 
     def fill_combo_formats(self):
         icon_mp4 = QtGui.QIcon()
@@ -61,10 +76,21 @@ class FrmDescargas(QtGui.QWidget, UiDescargas):
         self.vDescargas.tableWidget.setColumnWidth(3, 75)
         self.vDescargas.tableWidget.setColumnWidth(4, 175)
 
+    def on_click_video(self):
+        try:
+            thread = threading.Thread(target=self.add_video)
+            thread.start()
+        except Exception as Error:
+            print(Error)
+
     def add_video(self):
         if len(self.vDescargas.txtUrlVideo.text()) != 0:
-            global path_file
+            path_file = ""
             url_video = self.vDescargas.txtUrlVideo.text()
+
+            # Limpiar Url Video
+            self.vDescargas.txtUrlVideo.setText("")
+            self.vDescargas.txtUrlVideo.setFocus()
 
             # Obtener Propiedades del video
             v_pafy = pafy.new(url_video)
@@ -90,10 +116,6 @@ class FrmDescargas(QtGui.QWidget, UiDescargas):
             self.vDescargas.tableWidget.setItem(count_row, 3, QtGui.QTableWidgetItem("Pendiente"))
             self.vDescargas.tableWidget.setRowHeight(count_row, 19)
 
-            # Limpiar Url Video
-            self.vDescargas.txtUrlVideo.setText("")
-            self.vDescargas.txtUrlVideo.setFocus()
-
             titulo_cancion = str(titulo_cancion).replace('_', '')
             titulo_cancion = str(titulo_cancion).replace('-', '')
             titulo_cancion = str(titulo_cancion).replace('(', '')
@@ -106,13 +128,12 @@ class FrmDescargas(QtGui.QWidget, UiDescargas):
             titulo_cancion = str(titulo_cancion).replace('Ú', '')
 
             if 'win32' in sys.platform or 'win64' in sys.platform:
-                path_file = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo_cancion) + '.' + file_extension
+                path_file = os.path.join(self.base_directory, titulo_cancion) + '.' + file_extension
 
             self.list_videos.append(stream.url)
             self.list_rutas.append(path_file)
             self.list_formato.append(self.vDescargas.cBoxFormato.currentText())
             self.list_titulo_cancion.append(titulo_cancion)
-
         else:
             self.mostrar_mensaje('Mensaje Informativo', 'El video no existe, por favor verifique')
 
@@ -122,42 +143,31 @@ class FrmDescargas(QtGui.QWidget, UiDescargas):
         mensaje_box.exec_()
 
     def download_video(self):
-        # Ejecuta el metodo progress_report para ir mostrando el avance de la descarga
-        self.vDescargas.btnIniciarDescarga.setEnabled(False)
-        QtCore.QCoreApplication.processEvents()
-        for url in self.list_videos:
-            ruta = self.list_rutas[self.count]
-            formato = self.list_formato[self.count]
-            titulo = self.list_titulo_cancion[self.count]
-            try:
-                urllib.request.urlretrieve(url, ruta, reporthook=self.progress_report)
-                self.vDescargas.tableWidget.setItem(self.count, 1, QtGui.QTableWidgetItem("Total Descargado 100%"))
-                self.vDescargas.tableWidget.setItem(self.count, 3, QtGui.QTableWidgetItem("Completado"))
-                if formato == "mp3":
-                    m4a = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo) + '.' + 'm4a'
-                    mp3 = os.path.join(os.environ["USERPROFILE"], 'Desktop', titulo) + '.' + 'mp3'
-                    self.convert_mp3('./ffmpeg -i \"%s\" -y \"%s\"' % (m4a, mp3))
-                    os.remove(m4a)
-
-            except ValueError:
-                print('error')
-                continue
-            self.count += 1
-        QtCore.QCoreApplication.processEvents()
-        self.vDescargas.btnIniciarDescarga.setEnabled(True)
-        self.list_videos = []
-
-    def progress_report(self, block_read, size_block, file_size):
-        total_size_mb = round(((file_size / 1024) / 1024), 2)
-        total_download = block_read * size_block
-        total_download_mb = round(((total_download / 1024) / 1024), 2)
         try:
-            download_percentage = round((total_download_mb * 100) / total_size_mb, 2)
-            self.vDescargas.tableWidget.setItem(self.count, 1, QtGui.QTableWidgetItem('Total Descargado '
-                                                                                      + str(download_percentage) + "%"))
-        except ZeroDivisionError:
-            print('Se produce una Divicion por Cero')
-        QtCore.QCoreApplication.processEvents()
+            # Ejecuta el metodo progress_report para ir mostrando el avance de la descarga
+            self.vDescargas.btnIniciarDescarga.setEnabled(False)
+            QtCore.QCoreApplication.processEvents()
+            for url in self.list_videos:
+                ruta = self.list_rutas[self.count]
+                formato = self.list_formato[self.count]
+                titulo = self.list_titulo_cancion[self.count]
+                try:
+                    thread_download = DownloadFile(url, ruta, formato, titulo, self.count)
+                    self.connect(thread_download, QtCore.SIGNAL("mostrar(QString, QString)"), self.actualizar_porcentaje_descargado)
+                    thread_download.start()
+                except ValueError:
+                    print('error')
+                    continue
+                self.count += 1
+            QtCore.QCoreApplication.processEvents()
+            self.vDescargas.btnIniciarDescarga.setEnabled(True)
+            self.list_videos = []
+        except Exception as error:
+            print(error)
+
+    def actualizar_porcentaje_descargado(self, count, download_percentage):
+        self.vDescargas.tableWidget.setItem(int(count), 1, QtGui.QTableWidgetItem('Total Descargado '
+                                                                                  + str(download_percentage) + "%"))
 
     @staticmethod
     def convert_mp3(var_archivo):
@@ -171,30 +181,60 @@ class FrmDescargas(QtGui.QWidget, UiDescargas):
             subprocess.check_output(var_archivo, shell=True)
 
 
-# class FrmLogin(QtGui.QWidget):
-#     def __init__(self, parent=None):
-#         super(FrmLogin, self).__init__(parent)
-#         self.vLogin = UiLogin()
-#         self.vLogin.setup_ui(self)
-#         d = Database()
-#         SEED_DATA = [
-#             {
-#                 'decade': '1970s',
-#                 'artist': 'Debby Boone',
-#                 'song': 'You Light Up My Life',
-#                 'weeksAtOne': 10
-#             },
-#             {
-#                 'decade': '1980s',
-#                 'artist': 'Olivia Newton-John',
-#                 'song': 'Physical',
-#                 'weeksAtOne': 10
-#             },
-#             {
-#                 'decade': '1990s',
-#                 'artist': 'Mariah Carey',
-#                 'song': 'One Sweet Day',
-#                 'weeksAtOne': 16
-#             }
-#         ]
-        # d.insert_db(name_object="Cliente", data=SEED_DATA)
+            # class FrmLogin(QtGui.QWidget):
+            #     def __init__(self, parent=None):
+            #         super(FrmLogin, self).__init__(parent)
+            #         self.vLogin = UiLogin()
+            #         self.vLogin.setup_ui(self)
+            #         d = Database()
+            #         SEED_DATA = [
+            #             {
+            #                 'decade': '1970s',
+            #                 'artist': 'Debby Boone',
+            #                 'song': 'You Light Up My Life',
+            #                 'weeksAtOne': 10
+            #             },
+            #             {
+            #                 'decade': '1980s',
+            #                 'artist': 'Olivia Newton-John',
+            #                 'song': 'Physical',
+            #                 'weeksAtOne': 10
+            #             },
+            #             {
+            #                 'decade': '1990s',
+            #                 'artist': 'Mariah Carey',
+            #                 'song': 'One Sweet Day',
+            #                 'weeksAtOne': 16
+            #             }
+            #         ]
+            # d.insert_db(name_object="Cliente", data=SEED_DATA)
+
+class DownloadFile(QtCore.QThread):
+    def __init__(self, url, ruta, formato, titulo, count):
+        QtCore.QThread.__init__(self)
+        self.url = url
+        self.ruta = ruta
+        self.formato = formato
+        self.titulo = titulo
+        self.count = count
+
+    def run(self):
+        urllib.request.urlretrieve(self.url, self.ruta, reporthook=self.progress_report)
+
+        self.vDescargas.tableWidget.setItem(self.count, 1, QtGui.QTableWidgetItem("Total Descargado 100%"))
+        self.vDescargas.tableWidget.setItem(self.count, 3, QtGui.QTableWidgetItem("Completado"))
+        if self.formato == "mp3":
+            m4a = os.path.join(os.environ["USERPROFILE"], 'Desktop', self.titulo) + '.' + 'm4a'
+            mp3 = os.path.join(os.environ["USERPROFILE"], 'Desktop', self.titulo) + '.' + 'mp3'
+            self.convert_mp3('./ffmpeg -i \"%s\" -y \"%s\"' % (m4a, mp3))
+            os.remove(m4a)
+
+    def progress_report(self, block_read, size_block, file_size):
+        total_size_mb = round(((file_size / 1024) / 1024), 2)
+        total_download = block_read * size_block
+        total_download_mb = round(((total_download / 1024) / 1024), 2)
+        try:
+            download_percentage = round((total_download_mb * 100) / total_size_mb, 2)
+            self.emit(QtCore.SIGNAL("mostrar(QString, QString)"), str(self.count), str(download_percentage))
+        except ZeroDivisionError:
+            print('Se produce una Divicion por Cero')
